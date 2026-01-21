@@ -2,7 +2,46 @@
 
 All notable changes to the Innogy Puck Catcher Game.
 
-## [2026-01-20] - Current Session
+## [2026-01-21] - UI Simplification & Bug Fixes
+
+### Changed
+
+#### UI Simplification
+- **Removed header section** - Removed `<header class="minigame-header">` with logo and title from both `index.html` and widget
+- **Removed subtitle** - Removed `<p class="minigame-sub">` instructions paragraph
+- **Removed player name input** - Player names now come from API or default to "Anonym"
+- **Removed leaderboard help text** - Removed `<p class="minigame-help">` from leaderboard section
+
+#### Leaderboard
+- Now stores **every game played** (not just personal bests)
+- Player name defaults to "Anonym" when not provided by API
+- Removed name input field - players cannot set their own name
+
+#### Widget Options
+- Removed `showHeader`, `title`, `subtitle` options (no longer applicable)
+- Simplified to only: `showLeaderboard`, `showHelp`, `apiUrl`, `assetsUrl`
+
+### Fixed
+
+#### Goalie Rendering
+- **Fixed placeholder goalie on load** - Removed fallback circle/rectangle shapes that appeared before SVG loaded
+- Goalie now simply doesn't render until `goalie-2.svg` is fully loaded (typically instant)
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `index.html` | Removed header, subtitle, name input, leaderboard help text |
+| `js/widget.js` | Removed header/subtitle/title options and templates, removed LOGO_SVG constant |
+| `js/main.js` | Set `nameInput: null` |
+| `js/game/Game.js` | Simplified `init()` to not populate name input |
+| `js/game/Renderer.js` | Removed fallback goalie shape rendering |
+| `js/ui/Leaderboard.js` | Changed to store every game (not just personal bests) |
+| `README.md` | Updated widget options documentation |
+
+---
+
+## [2026-01-20] - Initial Session
 
 ### Added
 
@@ -158,9 +197,7 @@ Response:
   import { createGame } from 'path/to/minigame/js/widget.js';
 
   const { game, destroy } = createGame('#game-container', {
-    showHeader: true,      // Show logo and title (default: true)
     showLeaderboard: true, // Show leaderboard panel (default: true)
-    title: 'Custom Title', // Optional custom title
     showHelp: true,        // Show controls help text (default: true)
     apiUrl: 'https://yourdomain.com/api',      // For cross-origin API calls
     assetsUrl: 'https://yourdomain.com/gamifikace/' // For cross-origin image loading

@@ -70,7 +70,7 @@ export class Leaderboard {
   }
 
   /**
-   * Add a new score entry (only keeps personal records - best score per name)
+   * Add a new score entry for every game played
    * Tries API first, falls back to local storage
    * @param {string} name - Player name
    * @param {number} score - Score value
@@ -99,6 +99,7 @@ export class Leaderboard {
 
   /**
    * Add score to local storage (fallback)
+   * Stores every game played (not just personal bests)
    * @param {string} playerName - Player name
    * @param {number} score - Score value
    * @returns {Array} Updated scores array
@@ -106,25 +107,12 @@ export class Leaderboard {
   addScoreLocal(playerName, score) {
     const scores = this.load();
 
-    // Find existing entry for this player
-    const existingIndex = scores.findIndex(
-      entry => entry.name.toLowerCase() === playerName.toLowerCase()
-    );
-
-    if (existingIndex !== -1) {
-      // Only update if new score is better (personal record)
-      if (score > scores[existingIndex].score) {
-        scores[existingIndex].score = score;
-        scores[existingIndex].ts = Date.now();
-      }
-    } else {
-      // New player entry
-      scores.push({
-        name: playerName,
-        score: score,
-        ts: Date.now()
-      });
-    }
+    // Add new entry for every game played
+    scores.push({
+      name: playerName,
+      score: score,
+      ts: Date.now()
+    });
 
     // Sort by score descending
     scores.sort((a, b) => b.score - a.score);

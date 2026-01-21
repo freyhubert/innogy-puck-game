@@ -35,10 +35,8 @@ Embed the game in any webpage using the widget API:
   import { createGame } from 'path/to/js/widget.js';
 
   const { game, destroy } = createGame('#game-container', {
-    showHeader: true,      // Show logo and title
-    showLeaderboard: true, // Show leaderboard panel
-    title: 'Custom Title', // Optional custom title
-    showHelp: true,        // Show controls help text
+    showLeaderboard: true, // Show leaderboard panel (default: true)
+    showHelp: true,        // Show controls help text (default: true)
     apiUrl: 'https://api.example.com',     // For cross-origin API
     assetsUrl: 'https://cdn.example.com/'  // For cross-origin assets
   });

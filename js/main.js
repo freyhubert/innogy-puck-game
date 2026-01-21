@@ -19,7 +19,7 @@ function getElements() {
     bestEl: document.getElementById('best'),
     pauseBtn: document.getElementById('pauseBtn'),
     restartBtn: document.getElementById('restartBtn'),
-    nameInput: document.getElementById('nameInput'),
+    nameInput: null, // No longer used - names come from API or default to "Anonym"
     boardBody: document.getElementById('board')
   };
 }

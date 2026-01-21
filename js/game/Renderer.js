@@ -213,7 +213,7 @@ export class Renderer {
     ctx.ellipse(goalie.x, bounds.bottom - 10, bounds.width * 0.4, 15, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Draw goalie image
+    // Draw goalie image (skip if not loaded yet - better than showing placeholder)
     if (this.goalieLoaded && this.goalieImage.complete) {
       // Apply catch animation (slight scale bounce)
       const scale = 1 + goalie.catchAnimation * 0.08;
@@ -228,16 +228,8 @@ export class Renderer {
         bounds.width,
         bounds.height
       );
-    } else {
-      // Fallback: draw a simple goalie shape
-      ctx.fillStyle = '#36A9E1';
-      ctx.beginPath();
-      ctx.arc(goalie.x, goalie.y - 20, 40, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#3C3C3B';
-      ctx.fillRect(goalie.x - 50, goalie.y, 100, 60);
     }
+    // No fallback - goalie simply won't appear until image loads
 
     // Catch flash effect (green for successful save)
     if (goalie.catchFlash > 0) {

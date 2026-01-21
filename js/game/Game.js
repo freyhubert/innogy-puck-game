@@ -114,16 +114,10 @@ export class Game {
     if (this.leaderboard) {
       const playerData = await this.leaderboard.init();
 
-      // If API returned player data, set the name input
-      if (playerData && playerData.name && this.elements.nameInput) {
-        this.elements.nameInput.value = playerData.name;
-
-        // Set best score from API
-        if (playerData.bestScore) {
-          this.state.setBestScore(playerData.bestScore);
-        }
+      // Set best score from API if available, otherwise from local storage
+      if (playerData && playerData.bestScore) {
+        this.state.setBestScore(playerData.bestScore);
       } else {
-        // Fallback to local storage best score
         this.state.setBestScore(this.leaderboard.getBestScore());
       }
     }
