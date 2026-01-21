@@ -1,0 +1,52 @@
+SetEnvIfNoCase User-Agent "SemrushBot" BadBot
+SetEnvIfNoCase User-Agent "MJ12bot" BadBot
+SetEnvIfNoCase User-Agent "AhrefsBot" GoodBot
+SetEnvIfNoCase User-Agent "BLEXBot" BadBot
+Deny from env=BadBot
+
+
+# CORS headers for widget embedding
+# Note: Wildcards in origin (*.innogy.cz) are NOT supported by CORS spec
+# Using dynamic origin matching instead
+<IfModule mod_headers.c>
+  # Check if origin matches *.innogy.cz pattern
+  SetEnvIf Origin "^https://(.+\.)?innogy\.cz$" ORIGIN_OK=$0
+
+  # If origin matches, echo it back (dynamic CORS)
+  Header set Access-Control-Allow-Origin %{ORIGIN_OK}e env=ORIGIN_OK
+  Header set Access-Control-Allow-Methods "GET, POST, OPTIONS" env=ORIGIN_OK
+  Header set Access-Control-Allow-Headers "Content-Type, Accept" env=ORIGIN_OK
+</IfModule>
+
+# no cache javascript, css and image files
+<FilesMatch "\.(html|htm|js|css|svg||pngjpg|jpeg|gif|ico)$">
+    FileETag None
+    <IfModule mod_headers.c>
+        Header unset ETag
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+    </IfModule>
+</FilesMatch>
+
+RewriteEngine On
+RewriteBase /
+
+# automatically consider index.html and index.php
+    DirectoryIndex index.php index.html
+
+# automatic www if not having subdomain
+	RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+	RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,QSA,L]
+
+	RewriteCond %{SERVER_PORT} 80 
+	RewriteCond %{HTTP_HOST}  ^(www.)?sportovnipohary.cz
+	RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301,QSA,L]
+
+# trailing slash if not having extension
+	RewriteCond %{REQUEST_URI} !\.[[:alnum:]]+$
+	RewriteRule ^(.+[^/])$ /$1/ [R=301,L]
+
+# remove trailing slash if having extension
+    RewriteCond %{REQUEST_URI} \.[[:alnum:]]+/$
+    RewriteRule ^(.+[^/])/$ /$1 [R=301,L]
