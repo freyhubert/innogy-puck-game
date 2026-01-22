@@ -2,6 +2,40 @@
 
 All notable changes to the Innogy Puck Catcher Game.
 
+## [2026-01-22] - Remove localStorage (GDPR Compliance)
+
+### Removed
+
+#### localStorage
+- **Removed all localStorage usage** - No longer requires user consent for cookies/storage
+- Removed `STORAGE_KEY` constant from `constants.js`
+- Removed `load()`, `save()`, `addScoreLocal()`, `clear()`, `getBestScore()`, `isNewRecord()`, `getRank()`, `render()` methods from Leaderboard
+- Leaderboard now **requires API backend** - shows empty state if API unavailable
+
+### Changed
+
+#### Leaderboard (API-only)
+- Simplified to API-only mode - no localStorage fallback
+- `addScore()` method now only takes `score` parameter (no name - always "Anonym")
+- Best score tracked in memory during session, initialized from API if available
+
+#### Game.js
+- Removed `getBestScore()` calls - best score tracked in `State.js`
+- Personal record detection uses in-memory state instead of localStorage
+- Renamed `isAllTime` to `isPersonalRecord` for clarity
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `js/ui/Leaderboard.js` | Removed all localStorage operations, API-only mode |
+| `js/game/Game.js` | Removed localStorage dependencies, use state for best score |
+| `js/game/Renderer.js` | Changed `isAllTime` to `isPersonalRecord` |
+| `js/utils/constants.js` | Removed `STORAGE_KEY` |
+| `README.md` | Updated to reflect API-only leaderboard |
+
+---
+
 ## [2026-01-21] - UI Simplification & Bug Fixes
 
 ### Changed
@@ -49,7 +83,6 @@ All notable changes to the Innogy Puck Catcher Game.
 - **New file: `js/services/api.js`** - API service for server communication
   - `GET /api/game/init` - Fetches player info and leaderboard on page load
   - `POST /api/game/score` - Submits player score, returns updated leaderboard
-  - Graceful fallback to localStorage when API unavailable
 
 #### Visual Effects
 - **Goal flash effect** - Red radial gradient flash when puck enters goal
@@ -92,9 +125,7 @@ All notable changes to the Innogy Puck Catcher Game.
 ### Changed
 
 #### Leaderboard
-- Now stores only personal records (best score per player name)
-- Case-insensitive player name matching
-- Async/await pattern for API calls with localStorage fallback
+- Async/await pattern for API calls
 
 #### CSS Namespacing
 - All CSS selectors prefixed with `minigame-` to avoid collisions when embedded

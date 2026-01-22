@@ -6,7 +6,7 @@ A hockey-themed mini game where players control a goalie to catch falling pucks.
 
 - **Canvas-based rendering** - Smooth 60fps animation with delta-time physics
 - **Progressive difficulty** - Pucks fall faster and spawn more frequently over time
-- **Local leaderboard** - Scores saved to localStorage with optional API backend
+- **API leaderboard** - Scores stored via backend API (no localStorage)
 - **Widget mode** - Embeddable in any webpage with isolated CSS
 - **Cross-origin support** - CORS configuration for embedding on different domains
 - **Responsive controls** - Mouse, keyboard (arrow keys), and touch support
@@ -77,7 +77,7 @@ Embed the game in any webpage using the widget API:
 │   ├── ui/
 │   │   └── Leaderboard.js  # Score tracking
 │   ├── services/
-│   │   └── api.js          # API service (optional backend)
+│   │   └── api.js          # API service (required for leaderboard)
 │   └── utils/
 │       ├── constants.js    # Game configuration
 │       ├── helpers.js      # Utility functions

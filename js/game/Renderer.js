@@ -465,7 +465,7 @@ export class Renderer {
     ctx.fillRect(0, 0, this.width, this.height);
 
     // Gold glow for all-time record
-    if (overlay.isAllTime) {
+    if (overlay.isPersonalRecord) {
       const g = ctx.createRadialGradient(
         this.width / 2, by + bh / 2, 40,
         this.width / 2, by + bh / 2, 380
@@ -486,10 +486,10 @@ export class Renderer {
 
     // Title
     ctx.textAlign = 'center';
-    ctx.fillStyle = overlay.isAllTime ? 'rgba(255, 211, 74, 0.98)' : COLORS.MUTED;
+    ctx.fillStyle = overlay.isPersonalRecord ? 'rgba(255, 211, 74, 0.98)' : COLORS.MUTED;
     ctx.font = '900 34px system-ui, -apple-system, Segoe UI, Roboto, Arial';
-    ctx.shadowColor = overlay.isAllTime ? 'rgba(255, 193, 7, 0.55)' : 'transparent';
-    ctx.shadowBlur = overlay.isAllTime ? 16 : 0;
+    ctx.shadowColor = overlay.isPersonalRecord ? 'rgba(255, 193, 7, 0.55)' : 'transparent';
+    ctx.shadowBlur = overlay.isPersonalRecord ? 16 : 0;
     ctx.fillText(overlay.title, this.width / 2, by + 60);
 
     // Subtitle

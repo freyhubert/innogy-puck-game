@@ -56,5 +56,3 @@ export const EFFECTS = {
   CATCH_FLASH_DECAY: 0.09,
   CATCH_TEXT_DURATION: 30
 };
-
-export const STORAGE_KEY = 'innogy_puck_game_v1';

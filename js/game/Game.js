@@ -114,12 +114,11 @@ export class Game {
     if (this.leaderboard) {
       const playerData = await this.leaderboard.init();
 
-      // Set best score from API if available, otherwise from local storage
+      // Set best score from API if available
       if (playerData && playerData.bestScore) {
         this.state.setBestScore(playerData.bestScore);
-      } else {
-        this.state.setBestScore(this.leaderboard.getBestScore());
       }
+      // Otherwise best score stays at 0 (no localStorage fallback)
     }
 
     // Update UI
@@ -199,10 +198,7 @@ export class Game {
     this.elements.pauseBtn.disabled = true;
     this.updatePauseButton();
 
-    // Reload best score (might have changed)
-    if (this.leaderboard) {
-      this.state.setBestScore(this.leaderboard.getBestScore());
-    }
+    // Best score is already tracked in state (updated after each game)
 
     this.updateUI();
     this.draw();
@@ -212,30 +208,23 @@ export class Game {
    * End the game
    */
   async end() {
-    // Check for all-time record before saving
-    const previousBest = this.leaderboard ? this.leaderboard.getBestScore() : this.state.bestScore;
-    const isAllTimeRecord = this.state.score > previousBest;
+    // Check for personal record (best score tracked in state)
+    const isPersonalRecord = this.state.score > this.state.bestScore;
 
-    // Save score to leaderboard if available (async - submits to API if available)
+    // Save score to leaderboard via API
     if (this.leaderboard) {
-      const name = this.elements.nameInput ? (this.elements.nameInput.value || '').trim() : '';
-      await this.leaderboard.addScore(name, this.state.score);
-
-      // Render is handled by addScore when using API, but call for local fallback
-      if (!this.leaderboard.useApi) {
-        this.leaderboard.render();
-      }
+      await this.leaderboard.addScore(this.state.score);
     }
 
-    // Update best score
+    // Update best score in state
     this.state.updateBestScore();
 
     // Set end overlay
-    if (isAllTimeRecord) {
+    if (isPersonalRecord) {
       this.endOverlay = {
         title: '🏆 OSOBNÍ REKORD!',
         subtitle: `Počet zákroků: ${this.state.score}`,
-        isAllTime: true
+        isPersonalRecord: true
       };
 
       // Celebration confetti bursts
@@ -246,7 +235,7 @@ export class Game {
       this.endOverlay = {
         title: 'Konec hry',
         subtitle: `Počet zákroků: ${this.state.score} • Tvůj rekord: ${this.state.bestScore}`,
-        isAllTime: false
+        isPersonalRecord: false
       };
     }
 
