@@ -6,10 +6,10 @@
 const API_CONFIG = {
   // For cross-origin (CORS) usage, set full URL: 'https://yourdomain.com/api'
   // For same-origin usage, use relative path: '/api'
-  baseUrl: '/api',
+  baseUrl: '/innogy24ajax',
   endpoints: {
-    init: '/game/init',      // GET - returns player info and leaderboard
-    submitScore: '/game/score' // POST - submits score, returns updated leaderboard
+    init: '/Oh2026Init',      // GET - returns player info and leaderboard
+    submitScore: '/Oh2026Score' // POST - submits score, returns updated leaderboard
   }
 };
 
