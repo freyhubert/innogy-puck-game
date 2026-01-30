@@ -33,6 +33,13 @@ All notable changes to the Innogy Puck Catcher Game.
 - Text areas only rendered if content is provided
 - Changed `<p class="minigame-help">` to `<div class="minigame-bottom-text">`
 
+#### Idle Overlay Text
+- **New widget option: `idleText`** - Customize idle overlay text
+  - `title` - Title text (default: "Chytej puky!")
+  - `subtitle1` - First subtitle line (optional, not shown if empty)
+  - `subtitle2` - Second subtitle line (optional, not shown if empty)
+- Button position adjusts based on subtitle count
+
 ### Changed
 
 #### Score Display
@@ -56,9 +63,9 @@ All notable changes to the Innogy Puck Catcher Game.
 
 | File | Changes |
 |------|---------|
-| `js/widget.js` | Added `secondaryButton` option |
+| `js/widget.js` | Added `secondaryButton`, `idleText` options |
 | `js/game/Game.js` | Accept options, handle secondary button click, fix score sync race condition |
-| `js/game/Renderer.js` | Draw secondary button when configured |
+| `js/game/Renderer.js` | Draw secondary button when configured, configurable idle text |
 | `js/game/State.js` | Preserve bestScore on reset, add score value to catchText |
 | `js/utils/helpers.js` | Updated formatDate for Czech locale (dd. mm. YYYY H:i) |
 | `js/ui/Leaderboard.js` | Use formatDate for date display |

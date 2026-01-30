@@ -31,7 +31,8 @@ export class Renderer {
    * Create renderer
    * @param {HTMLCanvasElement} canvas - Canvas element
    * @param {Object} options - Renderer options
-   * @param {Object} options.secondaryButton - Secondary button config {url, target}
+   * @param {Object} options.secondaryButton - Secondary button config {url, target, text}
+   * @param {Object} options.idleText - Idle overlay text config {title, subtitle1, subtitle2}
    */
   constructor(canvas, options = {}) {
     this.canvas = canvas;
@@ -403,6 +404,7 @@ export class Renderer {
    */
   drawIdleOverlay() {
     const ctx = this.ctx;
+    const idleText = this.options.idleText || {};
 
     ctx.save();
 
@@ -411,22 +413,31 @@ export class Renderer {
     ctx.fillRect(0, 0, this.width, this.height);
 
     // Title
+    const title = idleText.title || 'Chytej puky!';
     ctx.fillStyle = 'rgba(0,0,0,0.95)';
     ctx.font = '900 28px system-ui, -apple-system, Segoe UI, Roboto, Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Chytej puky!', this.width / 2, 200);
+    ctx.fillText(title, this.width / 2, 200);
 
-    // Subtitle
+    // Subtitles (only draw if specified)
     ctx.fillStyle = COLORS.MUTED;
     ctx.font = '600 18px system-ui, -apple-system, Segoe UI, Roboto, Arial';
-    ctx.fillText('Pohybuj brankářem a chytej puky', this.width / 2, 235);
-    ctx.fillText('Máš 3 životy (góly)', this.width / 2, 265);
 
-    // Draw start button
+    let subtitleY = 235;
+    if (idleText.subtitle1) {
+      ctx.fillText(idleText.subtitle1, this.width / 2, subtitleY);
+      subtitleY += 30;
+    }
+    if (idleText.subtitle2) {
+      ctx.fillText(idleText.subtitle2, this.width / 2, subtitleY);
+      subtitleY += 30;
+    }
+
+    // Draw start button (position adjusts based on subtitle count)
     const btnWidth = 180;
     const btnHeight = 50;
     const btnX = (this.width - btnWidth) / 2;
-    const btnY = 300;
+    const btnY = subtitleY;
 
     // Button background with gradient
     const btnGrad = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnHeight);

@@ -45,6 +45,11 @@ Embed the game in any webpage using the widget API:
       url: 'https://example.com/back',
       target: '_self',     // _self, _blank, etc.
       text: 'Zpět'         // Button label (default: "Zpět")
+    },
+    idleText: {            // Optional idle overlay text
+      title: 'Chytej puky!',           // Title (default: "Chytej puky!")
+      subtitle1: 'Move the goalie',    // First subtitle line (optional)
+      subtitle2: 'You have 3 lives'    // Second subtitle line (optional)
     }
   });
 

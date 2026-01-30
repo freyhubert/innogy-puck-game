@@ -152,6 +152,10 @@ function getElements(container, id) {
  * @param {string} options.secondaryButton.url - URL to navigate to
  * @param {string} options.secondaryButton.target - Link target (_self, _blank, etc.)
  * @param {string} options.secondaryButton.text - Button label (default: "Zpět")
+ * @param {Object} options.idleText - Idle overlay text config
+ * @param {string} options.idleText.title - Title text (default: "Chytej puky!")
+ * @param {string} options.idleText.subtitle1 - First subtitle line (optional)
+ * @param {string} options.idleText.subtitle2 - Second subtitle line (optional)
  * @returns {Object} Game instance and destroy function
  */
 export function createGame(containerOrSelector, options = {}) {
@@ -196,6 +200,9 @@ export function createGame(containerOrSelector, options = {}) {
   };
   if (options.secondaryButton?.url) {
     gameOptions.secondaryButton = options.secondaryButton;
+  }
+  if (options.idleText) {
+    gameOptions.idleText = options.idleText;
   }
   const game = new Game(canvas, elements, gameOptions);
 
