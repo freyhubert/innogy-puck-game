@@ -24,12 +24,15 @@ export class GameState {
 
   /**
    * Reset all state to initial values
+   * Note: bestScore is preserved across resets
    */
   reset() {
+    const preservedBestScore = this.bestScore || 0;
+
     this.status = GameStatus.IDLE;
     this.score = 0;
     this.lives = GAME.INITIAL_LIVES;
-    this.bestScore = 0;
+    this.bestScore = preservedBestScore;
     this.frameCount = 0;
 
     // Difficulty settings (these increase over time)
@@ -135,7 +138,8 @@ export class GameState {
     this.catchText = {
       x,
       y,
-      ttl: EFFECTS.CATCH_TEXT_DURATION
+      ttl: EFFECTS.CATCH_TEXT_DURATION,
+      value: this.score
     };
   }
 

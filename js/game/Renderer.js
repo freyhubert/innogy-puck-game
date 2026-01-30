@@ -354,8 +354,8 @@ export class Renderer {
   }
 
   /**
-   * Draw the "+1" catch text effect
-   * @param {Object|null} catchText - Catch text state
+   * Draw the score catch text effect
+   * @param {Object|null} catchText - Catch text state with value property
    */
   drawCatchText(catchText) {
     if (!catchText || catchText.ttl <= 0) return;
@@ -363,6 +363,7 @@ export class Renderer {
     const ctx = this.ctx;
     const lift = 30 - catchText.ttl;
     const opacity = Math.min(1, catchText.ttl / 10);
+    const text = String(catchText.value);
 
     ctx.save();
     ctx.font = '900 26px system-ui, -apple-system, Segoe UI, Roboto, Arial';
@@ -372,8 +373,8 @@ export class Renderer {
     ctx.shadowColor = 'rgba(0, 180, 80, 0.6)';
     ctx.shadowBlur = 12;
     ctx.textAlign = 'center';
-    ctx.strokeText('+1', catchText.x, catchText.y - lift);
-    ctx.fillText('+1', catchText.x, catchText.y - lift);
+    ctx.strokeText(text, catchText.x, catchText.y - lift);
+    ctx.fillText(text, catchText.x, catchText.y - lift);
     ctx.restore();
   }
 
@@ -410,18 +411,19 @@ export class Renderer {
     ctx.fillStyle = 'rgba(0,0,0,0.95)';
     ctx.font = '900 28px system-ui, -apple-system, Segoe UI, Roboto, Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('Chytej puky!', this.width / 2, 240);
+    ctx.fillText('Chytej puky!', this.width / 2, 200);
 
     // Subtitle
     ctx.fillStyle = COLORS.MUTED;
-    ctx.font = '600 14px system-ui, -apple-system, Segoe UI, Roboto, Arial';
-    ctx.fillText('Pohybuj brankářem a chytej puky.', this.width / 2, 275);
+    ctx.font = '600 18px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+    ctx.fillText('Pohybuj brankářem a chytej puky', this.width / 2, 235);
+    ctx.fillText('Máš 3 životy (góly)', this.width / 2, 265);
 
     // Draw start button
     const btnWidth = 180;
     const btnHeight = 50;
     const btnX = (this.width - btnWidth) / 2;
-    const btnY = 310;
+    const btnY = 300;
 
     // Button background with gradient
     const btnGrad = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnHeight);
