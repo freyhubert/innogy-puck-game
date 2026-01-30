@@ -42,6 +42,7 @@ function generateId() {
 function buildHTML(id, options = {}) {
   const {
     showLeaderboard = true,
+    leaderboardTitle = 'Žebříček',
     topText,
     bottomText,
     helpText  // backwards compatibility alias for bottomText
@@ -60,7 +61,7 @@ function buildHTML(id, options = {}) {
 
   const leaderboardHTML = showLeaderboard ? `
     <aside class="minigame-card">
-      <h2>🏅 Žebříček</h2>
+      <h2>🏅 ${leaderboardTitle}</h2>
 
       <div class="minigame-leaderboard">
         <div class="minigame-leaderboard-header">
@@ -142,6 +143,7 @@ function getElements(container, id) {
  * @param {string|HTMLElement} containerOrSelector - Container element or CSS selector
  * @param {Object} options - Configuration options
  * @param {boolean} options.showLeaderboard - Show leaderboard panel (default: true)
+ * @param {string} options.leaderboardTitle - Leaderboard header text (default: "Žebříček")
  * @param {string} options.topText - HTML content above canvas (optional)
  * @param {string} options.bottomText - HTML content below canvas (optional)
  * @param {string} options.helpText - Alias for bottomText (backwards compatibility)

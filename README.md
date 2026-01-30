@@ -36,6 +36,7 @@ Embed the game in any webpage using the widget API:
 
   const { game, destroy } = createGame('#game-container', {
     showLeaderboard: true, // Show leaderboard panel (default: true)
+    leaderboardTitle: 'Žebříček',  // Leaderboard header text (default: "Žebříček")
     topText: '<strong>Welcome!</strong> Catch the pucks.',  // HTML above canvas (optional)
     bottomText: 'Use arrow keys or mouse to move.',         // HTML below canvas (optional)
     confetti: true,        // Enable confetti effects (default: true)

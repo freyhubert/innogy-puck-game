@@ -40,6 +40,9 @@ All notable changes to the Innogy Puck Catcher Game.
   - `subtitle2` - Second subtitle line (optional, not shown if empty)
 - Button position adjusts based on subtitle count
 
+#### Leaderboard Title
+- **New widget option: `leaderboardTitle`** - Customize leaderboard header text (default: "Žebříček")
+
 ### Changed
 
 #### Score Display
