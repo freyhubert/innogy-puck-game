@@ -3,7 +3,7 @@
  * No localStorage - requires API backend for score storage
  */
 
-import { escapeHtml } from '../utils/helpers.js';
+import { escapeHtml, formatDate } from '../utils/helpers.js';
 import { apiService } from '../services/api.js';
 
 export class Leaderboard {
@@ -105,7 +105,7 @@ export class Leaderboard {
           <span class="minigame-leaderboard-cell">${rank}</span>
           <span class="minigame-leaderboard-cell">${medal}${escapeHtml(entry.name)}</span>
           <span class="minigame-leaderboard-cell"><strong>${entry.score}</strong></span>
-          <span class="minigame-leaderboard-cell">${entry.date || ''}</span>
+          <span class="minigame-leaderboard-cell">${entry.date ? formatDate(entry.date) : ''}</span>
         </div>
       `;
     }).join('');

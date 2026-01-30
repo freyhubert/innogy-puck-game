@@ -19,14 +19,15 @@ export function escapeHtml(str) {
 }
 
 /**
- * Format timestamp for display in Czech locale
+ * Format timestamp for display in Czech locale (dd. mm. YYYY H:i)
  * @param {number} timestamp - Unix timestamp
  * @returns {string} Formatted date string
  */
 export function formatDate(timestamp) {
   return new Date(timestamp).toLocaleString('cs-CZ', {
-    month: 'short',
     day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
     hour: '2-digit',
     minute: '2-digit'
   });
