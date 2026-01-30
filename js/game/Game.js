@@ -18,14 +18,18 @@ export class Game {
    * Create game instance
    * @param {HTMLCanvasElement} canvas - Game canvas
    * @param {Object} elements - DOM element references
+   * @param {Object} options - Game options
+   * @param {boolean} options.confetti - Enable confetti effects (default: true)
+   * @param {Object} options.secondaryButton - Secondary button config {url, target, text}
    */
-  constructor(canvas, elements) {
+  constructor(canvas, elements, options = {}) {
     this.canvas = canvas;
     this.elements = elements;
+    this.options = options;
 
     // Initialize subsystems
     this.state = new GameState();
-    this.renderer = new Renderer(canvas);
+    this.renderer = new Renderer(canvas, options);
     this.input = new InputHandler(canvas);
     this.goalie = new Goalie();
     this.goal = new Goal();
@@ -101,6 +105,16 @@ export class Game {
       if (x >= btn.x && x <= btn.x + btn.width && y >= btn.y && y <= btn.y + btn.height) {
         this.restart();
         this.start();
+        return;
+      }
+    }
+
+    // Check secondary button on end overlay
+    if (this.state.isEnded && this.buttonBounds.secondaryButton && this.options.secondaryButton?.url) {
+      const btn = this.buttonBounds.secondaryButton;
+      if (x >= btn.x && x <= btn.x + btn.width && y >= btn.y && y <= btn.y + btn.height) {
+        const target = this.options.secondaryButton.target || '_self';
+        window.open(this.options.secondaryButton.url, target);
         return;
       }
     }
@@ -228,8 +242,10 @@ export class Game {
       };
 
       // Celebration confetti bursts
-      for (let i = 0; i < 3; i++) {
-        this.confetti.spawn(this.goalie.x, this.goalie.y - 50, true);
+      if (this.options.confetti !== false) {
+        for (let i = 0; i < 3; i++) {
+          this.confetti.spawn(this.goalie.x, this.goalie.y - 50, true);
+        }
       }
     } else {
       this.endOverlay = {
@@ -293,7 +309,9 @@ export class Game {
 
         // Trigger effects
         this.goalie.triggerCatch();
-        this.confetti.spawn(puck.x, puck.y);
+        if (this.options.confetti !== false) {
+          this.confetti.spawn(puck.x, puck.y);
+        }
         this.state.incrementScore(puck.x, this.goalie.y - 60);
       }
     }

@@ -19,15 +19,25 @@ export function escapeHtml(str) {
 }
 
 /**
- * Format timestamp for display in Czech locale (dd. mm. YYYY H:i)
+ * Format timestamp date portion in Czech locale (dd. mm. YYYY)
  * @param {number} timestamp - Unix timestamp
  * @returns {string} Formatted date string
  */
-export function formatDate(timestamp) {
+export function formatDateOnly(timestamp) {
   return new Date(timestamp).toLocaleString('cs-CZ', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric',
+    year: 'numeric'
+  });
+}
+
+/**
+ * Format timestamp time portion in Czech locale (H:i)
+ * @param {number} timestamp - Unix timestamp
+ * @returns {string} Formatted time string
+ */
+export function formatTimeOnly(timestamp) {
+  return new Date(timestamp).toLocaleString('cs-CZ', {
     hour: '2-digit',
     minute: '2-digit'
   });

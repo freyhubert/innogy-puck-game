@@ -37,8 +37,15 @@ Embed the game in any webpage using the widget API:
   const { game, destroy } = createGame('#game-container', {
     showLeaderboard: true, // Show leaderboard panel (default: true)
     showHelp: true,        // Show controls help text (default: true)
+    helpText: 'Custom help text with <strong>HTML</strong> support',
+    confetti: true,        // Enable confetti effects (default: true)
     apiUrl: 'https://api.example.com',     // For cross-origin API
-    assetsUrl: 'https://cdn.example.com/'  // For cross-origin assets
+    assetsUrl: 'https://cdn.example.com/', // For cross-origin assets
+    secondaryButton: {     // Optional secondary button on end overlay
+      url: 'https://example.com/back',
+      target: '_self',     // _self, _blank, etc.
+      text: 'Zpět'         // Button label (default: "Zpět")
+    }
   });
 
   // Clean up when done

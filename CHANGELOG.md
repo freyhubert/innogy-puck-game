@@ -2,6 +2,59 @@
 
 All notable changes to the Innogy Puck Catcher Game.
 
+## [2026-01-30] - UI Improvements & Secondary Button
+
+### Added
+
+#### Secondary Button on End Overlay
+- **New widget option: `secondaryButton`** - Adds optional secondary button next to "Hrát znovu"
+  - `url` - URL to navigate to when clicked
+  - `target` - Link target (`_self`, `_blank`, etc.)
+  - `text` - Button label (default: "Zpět")
+- Button styled with `rgb(65, 55, 50)` background
+- Only shown when `secondaryButton.url` is configured
+
+#### Confetti Option
+- **New widget option: `confetti`** - Enable/disable confetti effects (default: true)
+- When set to `false`, no confetti spawns on catch or personal record
+
+#### Custom Help Text
+- **New widget option: `helpText`** - Custom HTML for help text below canvas
+- Default: "Ovládání: myší nebo šipkami..."
+
+### Changed
+
+#### Score Display
+- **Catch text now shows actual score** - Instead of "+1", displays running total (1, 2, 3...)
+- Score value passed via `catchText.value` property in State.js
+
+#### Best Score Persistence
+- **Best score preserved across game restarts** - No longer resets to 0 when clicking "Hrát znovu"
+- `State.reset()` now preserves `bestScore` value in memory
+
+#### Leaderboard Date Formatting
+- **Czech locale date format** - Dates now displayed as `dd. mm. YYYY H:i`
+- Split `formatDate()` into `formatDateOnly()` and `formatTimeOnly()` helpers
+- Time wrapped in `<span class="minigame-leaderboard-time">` for CSS control
+- API now expected to return Unix timestamp for `date` field
+
+#### API Configuration
+- Updated endpoints to production URLs (`/innogy24ajax/Oh2026Init`, `/innogy24ajax/Oh2026Score`)
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `js/widget.js` | Added `secondaryButton` option |
+| `js/game/Game.js` | Accept options, handle secondary button click |
+| `js/game/Renderer.js` | Draw secondary button when configured |
+| `js/game/State.js` | Preserve bestScore on reset, add score value to catchText |
+| `js/utils/helpers.js` | Updated formatDate for Czech locale (dd. mm. YYYY H:i) |
+| `js/ui/Leaderboard.js` | Use formatDate for date display |
+| `js/services/api.js` | Updated endpoints, timestamp in docs |
+
+---
+
 ## [2026-01-22] - Remove localStorage (GDPR Compliance)
 
 ### Removed

@@ -30,12 +30,15 @@ export class Renderer {
   /**
    * Create renderer
    * @param {HTMLCanvasElement} canvas - Canvas element
+   * @param {Object} options - Renderer options
+   * @param {Object} options.secondaryButton - Secondary button config {url, target}
    */
-  constructor(canvas) {
+  constructor(canvas, options = {}) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.width = CANVAS.WIDTH;
     this.height = CANVAS.HEIGHT;
+    this.options = options;
 
     // Load innogy logo for puck
     this.logoImage = new Image();
@@ -500,30 +503,59 @@ export class Renderer {
     ctx.font = '700 16px system-ui, -apple-system, Segoe UI, Roboto, Arial';
     ctx.fillText(overlay.subtitle, this.width / 2, by + 94);
 
-    // Draw play again button
+    // Button dimensions
     const btnWidth = 180;
     const btnHeight = 50;
-    const btnX = (this.width - btnWidth) / 2;
     const btnY = by + 125;
+    const btnGap = 12;
+    const hasSecondary = !!this.options.secondaryButton?.url;
 
-    // Button background with gradient
-    const btnGrad = ctx.createLinearGradient(btnX, btnY, btnX, btnY + btnHeight);
+    // Calculate button positions
+    let primaryX, secondaryX;
+    if (hasSecondary) {
+      // Two buttons side by side
+      const totalWidth = btnWidth * 2 + btnGap;
+      primaryX = (this.width - totalWidth) / 2;
+      secondaryX = primaryX + btnWidth + btnGap;
+    } else {
+      // Single button centered
+      primaryX = (this.width - btnWidth) / 2;
+    }
+
+    // Draw primary button (play again)
+    const btnGrad = ctx.createLinearGradient(primaryX, btnY, primaryX, btnY + btnHeight);
     btnGrad.addColorStop(0, COLORS.BRAND_PRIMARY);
     btnGrad.addColorStop(1, '#c4006a');
     ctx.fillStyle = btnGrad;
-    roundedRectPath(ctx, btnX, btnY, btnWidth, btnHeight, 10);
+    roundedRectPath(ctx, primaryX, btnY, btnWidth, btnHeight, 10);
     ctx.fill();
 
-    // Button text
+    // Primary button text
     ctx.fillStyle = '#ffffff';
     ctx.font = '700 18px system-ui, -apple-system, Segoe UI, Roboto, Arial';
-    ctx.fillText('Hrát znovu', this.width / 2, btnY + 32);
+    ctx.fillText('Hrát znovu', primaryX + btnWidth / 2, btnY + 32);
+
+    // Build return object
+    const bounds = {
+      playAgainButton: { x: primaryX, y: btnY, width: btnWidth, height: btnHeight }
+    };
+
+    // Draw secondary button if configured
+    if (hasSecondary) {
+      ctx.fillStyle = 'rgb(65, 55, 50)';
+      roundedRectPath(ctx, secondaryX, btnY, btnWidth, btnHeight, 10);
+      ctx.fill();
+
+      // Secondary button text
+      const secondaryText = this.options.secondaryButton.text || 'Zpět';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(secondaryText, secondaryX + btnWidth / 2, btnY + 32);
+
+      bounds.secondaryButton = { x: secondaryX, y: btnY, width: btnWidth, height: btnHeight };
+    }
 
     ctx.restore();
 
-    // Return button bounds for click detection
-    return {
-      playAgainButton: { x: btnX, y: btnY, width: btnWidth, height: btnHeight }
-    };
+    return bounds;
   }
 }

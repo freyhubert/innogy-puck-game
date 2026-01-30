@@ -42,13 +42,13 @@ function generateId() {
 function buildHTML(id, options = {}) {
   const {
     showLeaderboard = true,
-    showHelp = true
+    showHelp = true,
+    helpText = 'Ovládání: <strong>myší</strong> nebo <strong>šipkami ← →</strong>. Klávesa <strong>P</strong> pro pauzu. Na mobilu táhni prstem do stran.'
   } = options;
 
   const helpHTML = showHelp ? `
     <p class="minigame-help">
-      Ovládání: <strong>myší</strong> nebo <strong>šipkami ← →</strong>. Klávesa <strong>P</strong> pro pauzu.
-      Na mobilu táhni prstem do stran.
+      ${helpText}
     </p>
   ` : '';
 
@@ -136,8 +136,14 @@ function getElements(container, id) {
  * @param {Object} options - Configuration options
  * @param {boolean} options.showLeaderboard - Show leaderboard panel (default: true)
  * @param {boolean} options.showHelp - Show help text (default: true)
+ * @param {string} options.helpText - Custom help text HTML (default: "Ovládání: ...")
+ * @param {boolean} options.confetti - Enable confetti effects (default: true)
  * @param {string} options.apiUrl - API base URL for cross-origin usage (e.g., 'https://yourdomain.com/api')
  * @param {string} options.assetsUrl - Base URL for assets (e.g., 'https://yourdomain.com/gamifikace/')
+ * @param {Object} options.secondaryButton - Secondary button config for end overlay
+ * @param {string} options.secondaryButton.url - URL to navigate to
+ * @param {string} options.secondaryButton.target - Link target (_self, _blank, etc.)
+ * @param {string} options.secondaryButton.text - Button label (default: "Zpět")
  * @returns {Object} Game instance and destroy function
  */
 export function createGame(containerOrSelector, options = {}) {
@@ -176,16 +182,22 @@ export function createGame(containerOrSelector, options = {}) {
     elements.boardBody = null;
   }
 
-  // Create game instance
-  const game = new Game(canvas, elements);
+  // Create game instance with options
+  const gameOptions = {
+    confetti: options.confetti !== false // default true
+  };
+  if (options.secondaryButton?.url) {
+    gameOptions.secondaryButton = options.secondaryButton;
+  }
+  const game = new Game(canvas, elements, gameOptions);
 
   // Return game instance and destroy function
   return {
     game,
     destroy: () => {
       // Stop game loop
-      if (game.animationFrameId) {
-        cancelAnimationFrame(game.animationFrameId);
+      if (game.animationId) {
+        cancelAnimationFrame(game.animationId);
       }
       // Clear container
       container.innerHTML = '';
