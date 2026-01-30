@@ -68,6 +68,27 @@ Embed the game in any webpage using the widget API:
 </script>
 ```
 
+### Widget Options Reference
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `showLeaderboard` | boolean | `true` | Show/hide the leaderboard panel |
+| `leaderboardTitle` | string | `"Žebříček"` | Leaderboard header text |
+| `topText` | string | - | HTML content above canvas (optional) |
+| `bottomText` | string | - | HTML content below canvas (optional) |
+| `helpText` | string | - | Alias for `bottomText` (backwards compat) |
+| `confetti` | boolean | `true` | Enable/disable confetti effects |
+| `apiUrl` | string | - | API base URL for cross-origin usage |
+| `assetsUrl` | string | - | Base URL for assets (images) |
+| `secondaryButton` | object | - | Secondary button on end overlay |
+| `secondaryButton.url` | string | - | URL to navigate to (required to show button) |
+| `secondaryButton.target` | string | `"_self"` | Link target (`_self`, `_blank`, etc.) |
+| `secondaryButton.text` | string | `"Zpět"` | Button label |
+| `idleText` | object | - | Customize idle overlay text |
+| `idleText.title` | string | `"Chytej puky!"` | Main title text |
+| `idleText.subtitle1` | string | - | First subtitle line (optional) |
+| `idleText.subtitle2` | string | - | Second subtitle line (optional) |
+
 ## Project Structure
 
 ```
