@@ -36,8 +36,8 @@ Embed the game in any webpage using the widget API:
 
   const { game, destroy } = createGame('#game-container', {
     showLeaderboard: true, // Show leaderboard panel (default: true)
-    showHelp: true,        // Show controls help text (default: true)
-    helpText: 'Custom help text with <strong>HTML</strong> support',
+    topText: '<strong>Welcome!</strong> Catch the pucks.',  // HTML above canvas (optional)
+    bottomText: 'Use arrow keys or mouse to move.',         // HTML below canvas (optional)
     confetti: true,        // Enable confetti effects (default: true)
     apiUrl: 'https://api.example.com',     // For cross-origin API
     assetsUrl: 'https://cdn.example.com/', // For cross-origin assets

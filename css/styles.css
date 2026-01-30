@@ -155,7 +155,6 @@
    ========================================================================== */
 
 .minigame-game-container {
-  margin-top: 12px;
   position: relative;
 }
 
@@ -247,15 +246,35 @@
 }
 
 /* ==========================================================================
-   Help Text
+   Top Text
    ========================================================================== */
 
-.minigame-help {
+.minigame-top-text {
   color: var(--minigame-text-muted);
   font-family: var(--minigame-font-family);
-  font-size: 12px;
-  margin-top: 10px;
-  line-height: 1.35;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 21px;
+}
+
+.minigame-top-text p:first-child:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Help/Bottom Text
+   ========================================================================== */
+
+.minigame-bottom-text {
+  color: var(--minigame-text-muted);
+  font-family: var(--minigame-font-family);
+  font-size: 16px;
+  margin-top: 20px;
+  line-height: 18px;
+}
+
+.minigame-bottom-text p:first-child:last-child {
+  margin-bottom: 0;
 }
 
 /* ==========================================================================

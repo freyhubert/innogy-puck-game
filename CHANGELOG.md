@@ -4,6 +4,14 @@ All notable changes to the Innogy Puck Catcher Game.
 
 ## [2026-01-30] - UI Improvements & Secondary Button
 
+### Fixed
+
+#### Score Sync Bug
+- **Fixed race condition where API score was lower than displayed score**
+  - Issue: When losing last life and catching another puck in the same frame, the catch was counted in UI but not sent to API
+  - Fix: Deferred `end()` call until all pucks in the frame are processed
+  - `Game.js` now uses `shouldEndGame` flag to ensure final score is captured
+
 ### Added
 
 #### Secondary Button on End Overlay
@@ -18,9 +26,12 @@ All notable changes to the Innogy Puck Catcher Game.
 - **New widget option: `confetti`** - Enable/disable confetti effects (default: true)
 - When set to `false`, no confetti spawns on catch or personal record
 
-#### Custom Help Text
-- **New widget option: `helpText`** - Custom HTML for help text below canvas
-- Default: "Ovládání: myší nebo šipkami..."
+#### Top/Bottom Text Areas
+- **New widget option: `topText`** - Custom HTML above canvas (optional)
+- **New widget option: `bottomText`** - Custom HTML below canvas (optional)
+- `helpText` still works as alias for `bottomText` (backwards compatibility)
+- Text areas only rendered if content is provided
+- Changed `<p class="minigame-help">` to `<div class="minigame-bottom-text">`
 
 ### Changed
 
@@ -46,7 +57,7 @@ All notable changes to the Innogy Puck Catcher Game.
 | File | Changes |
 |------|---------|
 | `js/widget.js` | Added `secondaryButton` option |
-| `js/game/Game.js` | Accept options, handle secondary button click |
+| `js/game/Game.js` | Accept options, handle secondary button click, fix score sync race condition |
 | `js/game/Renderer.js` | Draw secondary button when configured |
 | `js/game/State.js` | Preserve bestScore on reset, add score value to catchText |
 | `js/utils/helpers.js` | Updated formatDate for Czech locale (dd. mm. YYYY H:i) |

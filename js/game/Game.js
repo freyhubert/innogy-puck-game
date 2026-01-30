@@ -285,6 +285,8 @@ export class Game {
     this.state.updateDifficulty(elapsedMs);
 
     // Update pucks and check collisions
+    let shouldEndGame = false;
+
     for (const puck of this.pucks) {
       puck.update(delta);
 
@@ -298,7 +300,8 @@ export class Game {
         this.goal.triggerGoal();
         const gameOver = this.state.decrementLives();
         if (gameOver) {
-          this.end();
+          // Defer end() until all pucks processed to capture final score
+          shouldEndGame = true;
         }
         continue;
       }
@@ -314,6 +317,12 @@ export class Game {
         }
         this.state.incrementScore(puck.x, this.goalie.y - 60);
       }
+    }
+
+    // End game after all pucks processed (ensures final score is captured)
+    if (shouldEndGame) {
+      this.end();
+      return; // Stop update cycle
     }
 
     // Remove caught/scored pucks and off-screen pucks

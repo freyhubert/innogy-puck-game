@@ -42,14 +42,20 @@ function generateId() {
 function buildHTML(id, options = {}) {
   const {
     showLeaderboard = true,
-    showHelp = true,
-    helpText = 'Ovládání: <strong>myší</strong> nebo <strong>šipkami ← →</strong>. Klávesa <strong>P</strong> pro pauzu. Na mobilu táhni prstem do stran.'
+    topText,
+    bottomText,
+    helpText  // backwards compatibility alias for bottomText
   } = options;
 
-  const helpHTML = showHelp ? `
-    <p class="minigame-help">
-      ${helpText}
-    </p>
+  // topText shown only if specified
+  const topTextHTML = topText ? `
+    <div class="minigame-top-text">${topText}</div>
+  ` : '';
+
+  // bottomText (or helpText for backwards compat) shown only if specified
+  const bottomContent = bottomText || helpText;
+  const bottomTextHTML = bottomContent ? `
+    <div class="minigame-bottom-text">${bottomContent}</div>
   ` : '';
 
   const leaderboardHTML = showLeaderboard ? `
@@ -72,6 +78,7 @@ function buildHTML(id, options = {}) {
     <div class="minigame-wrap">
       <div class="minigame-card">
         <div class="minigame-game-container">
+          ${topTextHTML}
           <div class="minigame-canvas-toolbar">
             <div class="minigame-toolbar-stats">
               <div class="minigame-toolbar-stat">
@@ -103,7 +110,7 @@ function buildHTML(id, options = {}) {
             aria-label="Herní plocha - chytej innogy puky"
             role="img"
           ></canvas>
-          ${helpHTML}
+          ${bottomTextHTML}
         </div>
       </div>
 
@@ -135,8 +142,9 @@ function getElements(container, id) {
  * @param {string|HTMLElement} containerOrSelector - Container element or CSS selector
  * @param {Object} options - Configuration options
  * @param {boolean} options.showLeaderboard - Show leaderboard panel (default: true)
- * @param {boolean} options.showHelp - Show help text (default: true)
- * @param {string} options.helpText - Custom help text HTML (default: "Ovládání: ...")
+ * @param {string} options.topText - HTML content above canvas (optional)
+ * @param {string} options.bottomText - HTML content below canvas (optional)
+ * @param {string} options.helpText - Alias for bottomText (backwards compatibility)
  * @param {boolean} options.confetti - Enable confetti effects (default: true)
  * @param {string} options.apiUrl - API base URL for cross-origin usage (e.g., 'https://yourdomain.com/api')
  * @param {string} options.assetsUrl - Base URL for assets (e.g., 'https://yourdomain.com/gamifikace/')
