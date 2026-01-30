@@ -25,7 +25,7 @@ export const GAME = {
   SPAWN_INTERVAL_DECREASE: 50,    // milliseconds to decrease spawn interval each ramp
   SPEED_INCREASE: 0.35,          // speed increase each ramp
   MIN_SPAWN_INTERVAL: 400,        // milliseconds minimum spawn interval
-  MAX_SPEED: 16.0
+  MAX_SPEED: 22.0
 };
 
 export const PUCK = {
@@ -51,7 +51,7 @@ export const GOAL = {
 };
 
 export const EFFECTS = {
-  CONFETTI_COUNT: 18,
+  CONFETTI_COUNT: 12,
   CONFETTI_COUNT_GOLD: 44,
   CATCH_FLASH_DECAY: 0.09,
   CATCH_TEXT_DURATION: 30
