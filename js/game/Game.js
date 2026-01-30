@@ -250,7 +250,7 @@ export class Game {
     } else {
       this.endOverlay = {
         title: 'Konec hry',
-        subtitle: `Počet zákroků: ${this.state.score} • Tvůj rekord: ${this.state.bestScore}`,
+        subtitle: `Počet zákroků: ${this.state.score} • Můj rekord: ${this.state.bestScore}`,
         isPersonalRecord: false
       };
     }

@@ -91,7 +91,7 @@ function buildHTML(id, options = {}) {
                 <span class="minigame-toolbar-val" id="${id}-lives">3</span>
               </div>
               <div class="minigame-toolbar-stat">
-                <span class="minigame-toolbar-label">Tvůj rekord</span>
+                <span class="minigame-toolbar-label">Můj rekord</span>
                 <span class="minigame-toolbar-val" id="${id}-best">0</span>
               </div>
             </div>
