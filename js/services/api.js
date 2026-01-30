@@ -86,8 +86,8 @@ export class ApiService {
    *     bestScore: 42
    *   },
    *   leaderboard: [
-   *     { rank: 1, name: "Jan", score: 156, date: "2026-01-20" },
-   *     { rank: 2, name: "Marie", score: 142, date: "2026-01-19" },
+   *     { rank: 1, name: "Jan", score: 156, date: 1737388800000 },
+   *     { rank: 2, name: "Marie", score: 142, date: 1737302400000 },
    *     ...
    *   ]
    * }
@@ -134,8 +134,8 @@ export class ApiService {
    *     bestScore: 52
    *   },
    *   leaderboard: [
-   *     { rank: 1, name: "Jan", score: 156, date: "2026-01-20" },
-   *     { rank: 2, name: "Pavel", score: 52, date: "2026-01-20" },
+   *     { rank: 1, name: "Jan", score: 156, date: 1737388800000 },
+   *     { rank: 2, name: "Pavel", score: 52, date: 1737388800000 },
    *     ...
    *   ]
    * }
